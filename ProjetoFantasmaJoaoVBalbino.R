@@ -31,6 +31,8 @@ dfimdbptemp <- df %>% select(series_name,title,season,imdb) %>%
             variancia = var(imdb, na.rm = T), 
             desvio = sd(imdb, na.rm =T))
 
+
+
 ##3
 dfarm <- df %>% select(setting_terrain) %>% 
   group_by(setting_terrain) %>% 
