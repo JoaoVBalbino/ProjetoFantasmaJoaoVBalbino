@@ -120,10 +120,24 @@ ggsave("colunas-bi-freq.pdf", width = 158, height = 93, units = "mm")
 
 
 ##4 Relação entre as notas IMDB e engajamento;
-dfimdbeengag <- df %>% select(series_name,title,engagement,imdb) %>% 
-  group_by(series_name,season) %>%
-  summarise(media = mean(imdb, na.rm = T),
-            variancia = var(imdb, na.rm = T), 
-            desvio = sd(imdb, na.rm =T))
-
+#O intuito é entender a relação entre as notas do IMDB e o engajamento. A medida que as notas
+#aumentam o engajamento também é alto? Ou o contrário, ou não tem diferença, ou não dá pra
+#inferir nada?
+#separando as colunas desejadas e ordenando do menor ao meior imdb
+dfimdbeengag <- df %>% select(imdb,engagement) %>% 
+  arrange((imdb))
+#grafico de dispersão para analisar duas variáveis quantitativas 
+ggplot(dfimdbeengag) +
+  aes(x = engagement, y = imdb) +
+  geom_point(colour = "#A11D21", size = 3) +  
+  labs(
+    x = "Engagement", 
+    y = "IMDB",
+  ) +
+  theme_estat() 
+ggsave("graf_disp_pf_4.pdf", width = 158, height = 93, units = "mm")
+#calculando o coeficiente de pearson, para duas variaveis quantitativas
+correlation <- cor(dfimdbeengag$imdb, dfimdbeengag$engagement)
+print(correlation)
+  
 
